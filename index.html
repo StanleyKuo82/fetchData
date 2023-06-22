@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <script src="https://cdn.rawgit.com/Keyang/node-csvtojson/d41f44aa/browser/csvtojson.min.js"></script> <!--csv to JSON-->
+
+    <style>
+        * { box-sizing: border-box; }
+        body {max-width: 800px; width: 100%;
+        margin: 1em auto;
+        font-size: 2em;
+        font-family: Arial;
+        padding: 1em;}
+        h1 {text-align: center;}
+    </style>
+</head>
+<body>
+    <h1>Hello Stanley</h1>
+    <h2>Items</h2>
+    <main></main>
+</body>
+<script>
+    const url = "https://docs.google.com/spreadsheets/d/1ddsuGpWOOR5VfX1IrOXj1H99UDH_aOls_DSZnYKIA8k/export?format=csv";
+    const main = document.querySelector("main");
+    fetch(url).then(result => result.text()).then(function(csvtext){
+        return csv().fromString(csvtext);
+    }).then(function(csv){
+        // main.innerHTML = "<code>" + JSON.stringify(csv) + "</code>";
+        csv.forEach(row => {
+            main.innerHTML +=  "<h3>" + row.Name + "  " +row.Price+ "</h3>";
+            main.innerHTML +=  "<p>" + row.Discription + "<p>";   
+            main.innerHTML +=  "<p> Magic? " + row.Magic + "</p>";
+            main.innerHTML +=  "<p>-----------------</p>";                 
+        });
+    });
+</script>
+</html>
